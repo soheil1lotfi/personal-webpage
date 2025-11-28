@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "title": "Cursor Tracker",
+    "subtitle": "A Chrome extension that tracks cursor movements and interactions for behavior analysis.",
+    "year": "2024",
+    "tags": ["Chrome Extension", "JavaScript", "Python", "Data"],
+    "category": "web",
+    "image": "https://opengraph.githubassets.com/1/soheil1lotfi/cursor-tracker",
+    "repo": "https://github.com/soheil1lotfi/cursor-tracker"
+  },
+  {
+    "id": 2,
+    "title": "Annotated Image Component",
+    "subtitle": "Photo gallery application demonstrating MVC/PAC architecture and annotation features in Java Swing.",
+    "year": "2025",
+    "tags": ["Java", "Desktop", "MVC", "Swing"],
+    "category": "ux",
+    "image": "/src/assets/projects/MVC-architecture.png",
+    "repo": "https://github.com/soheil1lotfi/Annotated-Image-Component-in-Java-Swing"
+  },
+  {
+    "id": 3,
+    "title": "Gestural Interaction",
+    "subtitle": "Web conference prototype with real-time hand gesture recognition using MediaPipe and OpenCV.",
+    "year": "2024",
+    "tags": ["Python", "Flask", "MediaPipe", "OpenCV"],
+    "category": "ai",
+    "image": "/src/assets/projects/gestural-interaction.png",
+    "repo": "https://github.com/soheil1lotfi/gestural-interaction"
+  },
+  {
+    "id": 4,
+    "title": "IR-ALPR",
+    "subtitle": "Iranian Automatic License Plate Recognition system using deep learning and computer vision.",
+    "year": "2024",
+    "tags": ["Python", "Deep Learning", "Computer Vision", "Jupyter"],
+    "category": "ai",
+    "image": "/src/assets/projects/plate-detection.png",
+    "repo": "https://github.com/pandanautinspace/IR-ALPR"
+  },
+  {
+    "id": 5,
+    "title": "IGR204 Data Visualization",
+    "subtitle": "Interactive data visualization project for the IGR204 course at Télécom Paris.",
+    "year": "2023",
+    "tags": ["Python", "Data Viz", "Jupyter", "Analytics"],
+    "category": "ux",
+    "image": "https://opengraph.githubassets.com/1/lisarosilio/igr204-Mini-Project",
+    "repo": "https://github.com/lisarosilio/igr204-Mini-Project"
+  },
+  {
+    "id": 6,
+    "title": "Amazon Marketplace Visualizer",
+    "subtitle": "A Chrome extension for visualizing and analyzing Amazon marketplace data.",
+    "year": "2025",
+    "tags": ["Chrome Extension", "JavaScript", "React", "Data Viz"],
+    "category": "web",
+    "image": "/src/assets/projects/junglemall.png",
+    "repo": "https://github.com/pandanautinspace/amazon-marketplace-visualizer"
+  },
+
+  {
+  "id": 7,
+  "title": "LLM Size Comparison",
+  "subtitle": "Physical data visualization comparing LLM sizes and performance metrics using clay, 3D-printed elements, and mixed materials.",
+  "year": "2024",
+  "tags": ["Data Viz", "Physical Computing", "3D Printing", "LLM"],
+  "category": "ux",
+  "image": "/src/assets/projects/llm-physviz.png"
+}
+]
