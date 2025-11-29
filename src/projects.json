@@ -7,7 +7,8 @@
     "tags": ["Chrome Extension", "JavaScript", "Python", "Data"],
     "category": "web",
     "image": "https://opengraph.githubassets.com/1/soheil1lotfi/cursor-tracker",
-    "repo": "https://github.com/soheil1lotfi/cursor-tracker"
+    "repo": "https://github.com/soheil1lotfi/cursor-tracker",
+    "description": "A comprehensive Chrome extension designed to track and analyze user cursor movements and interactions on web pages. This tool captures detailed behavioral data including mouse positions, clicks, scrolls, and dwell times. Built with vanilla JavaScript for the extension frontend and Python for data processing and analysis. The collected data can be used for UX research, heatmap generation, and understanding user behavior patterns. Features include real-time tracking, data export capabilities, and privacy-focused design with user consent mechanisms."
   },
   {
     "id": 2,
@@ -17,7 +18,8 @@
     "tags": ["Java", "Desktop", "MVC", "Swing"],
     "category": "ux",
     "image": "/src/assets/projects/MVC-architecture.png",
-    "repo": "https://github.com/soheil1lotfi/Annotated-Image-Component-in-Java-Swing"
+    "repo": "https://github.com/soheil1lotfi/Annotated-Image-Component-in-Java-Swing",
+    "description": "A sophisticated desktop application built with Java Swing that showcases clean software architecture through MVC (Model-View-Controller) and PAC (Presentation-Abstraction-Control) design patterns. The application allows users to manage photo galleries with advanced annotation capabilities, including text labels, shapes, and markup tools. Demonstrates best practices in GUI development, event handling, and separation of concerns. Features include multi-image management, annotation persistence, and an intuitive user interface following modern desktop design principles."
   },
   {
     "id": 3,
@@ -27,7 +29,8 @@
     "tags": ["Python", "Flask", "MediaPipe", "OpenCV"],
     "category": "ai",
     "image": "/src/assets/projects/gestural-interaction.png",
-    "repo": "https://github.com/soheil1lotfi/gestural-interaction"
+    "repo": "https://github.com/soheil1lotfi/gestural-interaction",
+    "description": "An innovative web conferencing prototype that enables touchless interaction through real-time hand gesture recognition. Built using MediaPipe's hand tracking solution and OpenCV for computer vision processing, this Flask-based web application allows users to control presentation slides, mute/unmute, and perform other conference actions using natural hand gestures. The system processes video streams in real-time, detecting and interpreting hand landmarks to trigger corresponding actions. Ideal for accessibility improvements and hands-free presentation scenarios."
   },
   {
     "id": 4,
@@ -37,7 +40,8 @@
     "tags": ["Python", "Deep Learning", "Computer Vision", "Jupyter"],
     "category": "ai",
     "image": "/src/assets/projects/plate-detection.png",
-    "repo": "https://github.com/pandanautinspace/IR-ALPR"
+    "repo": "https://github.com/pandanautinspace/IR-ALPR",
+    "description": "A specialized Automatic License Plate Recognition (ALPR) system tailored for Iranian license plates. This deep learning project combines object detection and optical character recognition (OCR) to accurately identify and read Iranian vehicle license plates from images and video streams. Implemented using state-of-the-art computer vision techniques including YOLO for plate detection and custom CNN models for character recognition. The system handles various challenging conditions including different lighting, angles, and plate styles specific to Iranian vehicles."
   },
   {
     "id": 5,
@@ -47,7 +51,8 @@
     "tags": ["Python", "Data Viz", "Jupyter", "Analytics"],
     "category": "ux",
     "image": "https://opengraph.githubassets.com/1/lisarosilio/igr204-Mini-Project",
-    "repo": "https://github.com/lisarosilio/igr204-Mini-Project"
+    "repo": "https://github.com/lisarosilio/igr204-Mini-Project",
+    "description": "An academic data visualization project completed as part of the IGR204 course at Télécom Paris. The project explores various techniques for visualizing complex datasets through interactive charts, graphs, and dashboards. Built using Python's data science stack including Pandas, Matplotlib, and Plotly, the project demonstrates best practices in data storytelling and visual analytics. Features include exploratory data analysis, interactive visualizations, and insightful statistical representations that reveal patterns and trends in the underlying data."
   },
   {
     "id": 6,
@@ -57,16 +62,17 @@
     "tags": ["Chrome Extension", "JavaScript", "React", "Data Viz"],
     "category": "web",
     "image": "/src/assets/projects/junglemall.png",
-    "repo": "https://github.com/pandanautinspace/amazon-marketplace-visualizer"
+    "repo": "https://github.com/pandanautinspace/amazon-marketplace-visualizer",
+    "description": "A powerful Chrome extension that enhances the Amazon shopping experience by providing advanced data visualization and analysis tools. Built with React for a smooth, modern interface, this extension helps users make informed purchasing decisions by visualizing price trends, seller ratings, review distributions, and product comparisons. Features include interactive charts, historical price tracking, and seller analytics. The extension seamlessly integrates with Amazon's interface, providing real-time insights without disrupting the shopping flow."
   },
-
   {
-  "id": 7,
-  "title": "LLM Size Comparison",
-  "subtitle": "Physical data visualization comparing LLM sizes and performance metrics using clay, 3D-printed elements, and mixed materials.",
-  "year": "2024",
-  "tags": ["Data Viz", "Physical Computing", "3D Printing", "LLM"],
-  "category": "ux",
-  "image": "/src/assets/projects/llm-physviz.png"
-}
+    "id": 7,
+    "title": "LLM Size Comparison",
+    "subtitle": "Physical data visualization comparing LLM sizes and performance metrics using clay, 3D-printed elements, and mixed materials.",
+    "year": "2024",
+    "tags": ["Data Viz", "Physical Computing", "3D Printing", "LLM"],
+    "category": "ux",
+    "image": "/src/assets/projects/llm-physviz.png",
+    "description": "An innovative physical data visualization project that represents the scale and performance characteristics of various Large Language Models (LLMs) through tangible, tactile sculptures. Using a combination of clay modeling, 3D-printed components, and mixed materials, this project creates a physical comparison of models like GPT-4, GPT-3.5, and other major LLMs. The visualization maps abstract metrics such as parameter count, training data size, and performance benchmarks to physical dimensions and textures, making complex AI concepts more accessible and understandable through direct physical interaction."
+  }
 ]

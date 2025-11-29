@@ -1,8 +1,21 @@
 import { useState, useEffect, useRef } from 'react'
+import { BrowserRouter as Router, Routes, Route, useNavigate, useParams } from 'react-router-dom'
 import './index.css';
 import projects from './projects.json';
 
 export default function Portfolio() {
+  return (
+    <Router basename={import.meta.env.BASE_URL || ''}>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/project/:projectId" element={<ProjectDetailPageWrapper />} />
+      </Routes>
+    </Router>
+  );
+}
+
+function HomePage() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('all');
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [isPressed, setIsPressed] = useState(false);
@@ -41,35 +54,26 @@ export default function Portfolio() {
     // Skip on touch devices for better performance
     if (isTouchDevice) return;
     
-    const ease = 0.08; // Lower = more lag, higher = snappier (0.05-0.15 recommended)
+    const ease = 0.08;
     
     const handleWheel = (e) => {
       e.preventDefault();
       scrollRef.current.target += e.deltaY;
       
-      // Clamp to document bounds
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       scrollRef.current.target = Math.max(0, Math.min(scrollRef.current.target, maxScroll));
     };
     
     const smoothScroll = () => {
       const diff = scrollRef.current.target - scrollRef.current.current;
-      
-      // Apply easing
       scrollRef.current.current += diff * ease;
-      
-      // Apply scroll
       window.scrollTo(0, scrollRef.current.current);
-      
-      // Continue animation
       rafRef.current = requestAnimationFrame(smoothScroll);
     };
     
-    // Initialize current scroll position
     scrollRef.current.current = window.scrollY;
     scrollRef.current.target = window.scrollY;
     
-    // Handle keyboard scroll
     const handleKeyDown = (e) => {
       const scrollAmount = 100;
       if (e.key === 'ArrowDown' || e.key === 'PageDown') {
@@ -86,12 +90,10 @@ export default function Portfolio() {
         scrollRef.current.target = document.documentElement.scrollHeight - window.innerHeight;
       }
       
-      // Clamp
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       scrollRef.current.target = Math.max(0, Math.min(scrollRef.current.target, maxScroll));
     };
     
-    // Sync on resize
     const handleResize = () => {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       scrollRef.current.target = Math.min(scrollRef.current.target, maxScroll);
@@ -113,16 +115,14 @@ export default function Portfolio() {
   }, [isTouchDevice]);
   
   useEffect(() => {
-    // Don't add cursor listeners on touch devices
     if (isTouchDevice) return;
     
     const handleMouseMove = (e) => {
       setCursorPos({ x: e.clientX, y: e.clientY });
       
-      // Smooth tooltip following with lag
       setTooltipPos(prev => ({
-        x: prev.x + (e.clientX - prev.x) * 0.15,
-        y: prev.y + (e.clientY - prev.y) * 0.15
+        x: prev.x + (e.clientX - prev.x) * 0.10,
+        y: prev.y + (e.clientY - prev.y) * 0.10
       }));
       
       if (!isVisible) setIsVisible(true);
@@ -139,7 +139,6 @@ export default function Portfolio() {
     document.documentElement.addEventListener('mouseleave', handleMouseLeave);
     document.documentElement.addEventListener('mouseenter', handleMouseEnter);
     
-    // Handle link hover
     const links = document.querySelectorAll('a[data-tooltip]');
     links.forEach(link => {
       link.addEventListener('mouseenter', (e) => {
@@ -167,9 +166,13 @@ export default function Portfolio() {
     ? projects 
     : projects.filter(p => p.category === activeTab);
 
+  const openProject = (projectId) => {
+    navigate(`/project/${projectId}`);
+  };
+
   return (
     <div className="portfolio-container">
-      {/* Liquid Glass Cursor - only show on non-touch devices */}
+      {/* Liquid Glass Cursor */}
       {!isTouchDevice && isVisible && (
         <div 
           className="liquid-cursor"
@@ -188,20 +191,21 @@ export default function Portfolio() {
         </div>
       )}
       
-      {/* Glass Tooltip - only show on non-touch devices */}
+      {/* Glass Tooltip */}
       {!isTouchDevice && tooltipVisible && (
         <div 
           className="glass-tooltip"
           style={{
             left: tooltipPos.x,
             top: tooltipPos.y,
+            opacity: tooltipVisible ? 1 : 0,
           }}
         >
           {tooltipData.logo && <img src={tooltipData.logo} alt="site logo" className="tooltip-logo" />}
           <span className="tooltip-url">{tooltipData.url}</span>
         </div>
       )}
-      
+
       {/* Header */}
       <header className="portfolio-header">
         <h1 className="portfolio-name">Soheil Lotfi</h1>
@@ -288,23 +292,23 @@ export default function Portfolio() {
       {/* Projects Grid */}
       <div className="portfolio-grid" key={activeTab} data-direction={slideDirection}>
         {filteredProjects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+          <ProjectCard key={project.id} project={project} onClick={() => openProject(project.id)} />
         ))}
       </div>
     </div>
   );
 }
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, onClick }) {
   const [imageError, setImageError] = useState(false);
   
   return (
     <article 
       className="portfolio-card"
+      onClick={onClick}
+      style={{ cursor: 'pointer' }}
     >
-      <div 
-        className="portfolio-image-wrapper"
-      >
+      <div className="portfolio-image-wrapper">
         {imageError ? (
           <div 
             style={{
@@ -371,5 +375,297 @@ function ProjectCard({ project }) {
         </div>
       </div>
     </article>
+  );
+}
+
+function ProjectDetailPageWrapper() {
+  const { projectId } = useParams();
+  const navigate = useNavigate();
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [isPressed, setIsPressed] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [tooltipData, setTooltipData] = useState({ logo: '', url: '' });
+  
+  // Smooth scroll state
+  const scrollRef = useRef({ current: 0, target: 0 });
+  const rafRef = useRef(null);
+  
+  const project = projects.find(p => p.id === parseInt(projectId));
+  
+  // Detect touch device
+  useEffect(() => {
+    const checkTouchDevice = () => {
+      const hasTouchScreen = (
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia('(hover: none) and (pointer: coarse)').matches
+      );
+      const isSmallScreen = window.innerWidth <= 768;
+      setIsTouchDevice(hasTouchScreen || isSmallScreen);
+    };
+    
+    checkTouchDevice();
+    window.addEventListener('resize', checkTouchDevice);
+    
+    return () => window.removeEventListener('resize', checkTouchDevice);
+  }, []);
+
+  // Smooth scroll with lag effect
+  useEffect(() => {
+    // Skip on touch devices for better performance
+    if (isTouchDevice) return;
+    
+    const ease = 0.08;
+    
+    const handleWheel = (e) => {
+      e.preventDefault();
+      scrollRef.current.target += e.deltaY;
+      
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      scrollRef.current.target = Math.max(0, Math.min(scrollRef.current.target, maxScroll));
+    };
+    
+    const smoothScroll = () => {
+      const diff = scrollRef.current.target - scrollRef.current.current;
+      scrollRef.current.current += diff * ease;
+      window.scrollTo(0, scrollRef.current.current);
+      rafRef.current = requestAnimationFrame(smoothScroll);
+    };
+    
+    scrollRef.current.current = window.scrollY;
+    scrollRef.current.target = window.scrollY;
+    
+    const handleKeyDown = (e) => {
+      const scrollAmount = 100;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        e.preventDefault();
+        scrollRef.current.target += e.key === 'PageDown' ? window.innerHeight : scrollAmount;
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault();
+        scrollRef.current.target -= e.key === 'PageUp' ? window.innerHeight : scrollAmount;
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        scrollRef.current.target = 0;
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        scrollRef.current.target = document.documentElement.scrollHeight - window.innerHeight;
+      }
+      
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      scrollRef.current.target = Math.max(0, Math.min(scrollRef.current.target, maxScroll));
+    };
+    
+    const handleResize = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      scrollRef.current.target = Math.min(scrollRef.current.target, maxScroll);
+    };
+    
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('resize', handleResize);
+    rafRef.current = requestAnimationFrame(smoothScroll);
+    
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('resize', handleResize);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [isTouchDevice]);
+
+  useEffect(() => {
+    if (isTouchDevice) return;
+    
+    const handleMouseMove = (e) => {
+      setCursorPos({ x: e.clientX, y: e.clientY });
+      
+      setTooltipPos(prev => ({
+        x: prev.x + (e.clientX - prev.x) * 0.3,
+        y: prev.y + (e.clientY - prev.y) * 0.3
+      }));
+      
+      if (!isVisible) setIsVisible(true);
+    };
+    
+    const handleMouseDown = () => setIsPressed(true);
+    const handleMouseUp = () => setIsPressed(false);
+    const handleMouseLeave = () => setIsVisible(false);
+    const handleMouseEnter = () => setIsVisible(true);
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mouseup', handleMouseUp);
+    document.documentElement.addEventListener('mouseleave', handleMouseLeave);
+    document.documentElement.addEventListener('mouseenter', handleMouseEnter);
+    
+    const links = document.querySelectorAll('a[data-tooltip]');
+    links.forEach(link => {
+      link.addEventListener('mouseenter', (e) => {
+        setTooltipData({
+          logo: e.target.getAttribute('data-logo'),
+          url: e.target.getAttribute('data-url')
+        });
+        setTooltipVisible(true);
+      });
+      link.addEventListener('mouseleave', () => {
+        setTooltipVisible(false);
+      });
+    });
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mouseup', handleMouseUp);
+      document.documentElement.removeEventListener('mouseleave', handleMouseLeave);
+      document.documentElement.removeEventListener('mouseenter', handleMouseEnter);
+    };
+  }, [isVisible, isTouchDevice]);
+  
+  if (!project) {
+    return (
+      <div className="portfolio-container">
+        <div className="project-detail-page">
+          <h1>Project not found</h1>
+          <button onClick={() => navigate('/')} className="back-button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to projects
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const goBackHome = () => {
+    navigate('/');
+    window.scrollTo(0, 0);
+  };
+
+  return (
+    <div className="portfolio-container">
+      {/* Liquid Glass Cursor */}
+      {!isTouchDevice && isVisible && (
+        <div 
+          className="liquid-cursor"
+          style={{
+            left: cursorPos.x,
+            top: cursorPos.y,
+            transform: `translate(-50%, -50%) scale(${isPressed ? 0.75 : 1})`,
+            width: '36px',
+            height: '36px'
+          }}
+        >
+          <div className="liquid-cursor-body" />
+          <div className="liquid-cursor-dot">
+            <div className="liquid-cursor-dot-inner" />
+          </div>
+        </div>
+      )}
+      
+      {/* Glass Tooltip */}
+      {!isTouchDevice && tooltipVisible && (
+        <div 
+          className="glass-tooltip"
+          style={{
+            left: tooltipPos.x,
+            top: tooltipPos.y,
+            opacity: tooltipVisible ? 1 : 0,
+          }}
+        >
+          {tooltipData.logo && <img src={tooltipData.logo} alt="site logo" className="tooltip-logo" />}
+          <span className="tooltip-url">{tooltipData.url}</span>
+        </div>
+      )}
+
+      <ProjectDetailPage project={project} onBack={goBackHome} />
+    </div>
+  );
+}
+
+function ProjectDetailPage({ project, onBack }) {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <div className="project-detail-page">
+      {/* Back button */}
+      <button className="back-button" onClick={onBack}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Back to projects
+      </button>
+
+      {/* Project header */}
+      <div className="project-detail-header">
+        <h1 className="project-detail-title">{project.title}</h1>
+        <p className="project-detail-subtitle">{project.subtitle}</p>
+        
+        <div className="project-detail-tags">
+          <span className="project-detail-tag">{project.year}</span>
+          {project.tags.map((tag, i) => (
+            <span key={i} className="project-detail-tag">{tag}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* Project image */}
+      <div className="project-detail-image-wrapper">
+        {imageError ? (
+          <div className="project-detail-image-placeholder">
+            <svg 
+              width="80" 
+              height="80" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="#999"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <span>Image not available</span>
+          </div>
+        ) : (
+          <img 
+            src={project.image} 
+            alt={project.title}
+            onError={() => setImageError(true)}
+          />
+        )}
+      </div>
+
+      {/* Project content */}
+      <div className="project-detail-content">
+        <div className="project-detail-section">
+          <h2 className="project-detail-section-title">About this project</h2>
+          <p className="project-detail-description">{project.description}</p>
+        </div>
+
+        {project.repo && (
+          <div className="project-detail-actions">
+            <a 
+              href={project.repo} 
+              className="project-detail-github-link" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              data-tooltip="true"
+              data-logo="https://github.githubassets.com/favicons/favicon.svg"
+              data-url="github.com"
+            >
+              View on GitHub ↗
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
