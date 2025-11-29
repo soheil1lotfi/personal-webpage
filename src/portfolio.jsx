@@ -49,12 +49,12 @@ function HomePage() {
     return () => window.removeEventListener('resize', checkTouchDevice);
   }, []);
   
-  // Smooth scroll with lag effect
+  // Optimized smooth scroll - stops when idle
   useEffect(() => {
-    // Skip on touch devices for better performance
     if (isTouchDevice) return;
     
     const ease = 0.08;
+    let isAnimating = false;
     
     const handleWheel = (e) => {
       e.preventDefault();
@@ -62,36 +62,67 @@ function HomePage() {
       
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       scrollRef.current.target = Math.max(0, Math.min(scrollRef.current.target, maxScroll));
+      
+      // Start animation if not already running
+      if (!isAnimating) {
+        isAnimating = true;
+        rafRef.current = requestAnimationFrame(smoothScroll);
+      }
     };
     
     const smoothScroll = () => {
       const diff = scrollRef.current.target - scrollRef.current.current;
-      scrollRef.current.current += diff * ease;
-      window.scrollTo(0, scrollRef.current.current);
-      rafRef.current = requestAnimationFrame(smoothScroll);
+      
+      // Stop animating if difference is negligible (< 0.5px)
+      if (Math.abs(diff) > 0.5) {
+        scrollRef.current.current += diff * ease;
+        window.scrollTo(0, scrollRef.current.current);
+        rafRef.current = requestAnimationFrame(smoothScroll);
+      } else {
+        // Snap to target and stop
+        scrollRef.current.current = scrollRef.current.target;
+        window.scrollTo(0, scrollRef.current.current);
+        isAnimating = false;
+        rafRef.current = null;
+      }
     };
     
+    // Initialize scroll position
     scrollRef.current.current = window.scrollY;
     scrollRef.current.target = window.scrollY;
     
     const handleKeyDown = (e) => {
       const scrollAmount = 100;
+      let shouldScroll = false;
+      
       if (e.key === 'ArrowDown' || e.key === 'PageDown') {
         e.preventDefault();
         scrollRef.current.target += e.key === 'PageDown' ? window.innerHeight : scrollAmount;
+        shouldScroll = true;
       } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
         e.preventDefault();
         scrollRef.current.target -= e.key === 'PageUp' ? window.innerHeight : scrollAmount;
+        shouldScroll = true;
       } else if (e.key === 'Home') {
         e.preventDefault();
         scrollRef.current.target = 0;
+        shouldScroll = true;
       } else if (e.key === 'End') {
         e.preventDefault();
         scrollRef.current.target = document.documentElement.scrollHeight - window.innerHeight;
+        shouldScroll = true;
       }
       
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      scrollRef.current.target = Math.max(0, Math.min(scrollRef.current.target, maxScroll));
+      if (shouldScroll) {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        scrollRef.current.target = Math.max(0, Math.min(scrollRef.current.target, maxScroll));
+        
+        // Start animation if not already running
+        if (!isAnimating) {
+          isAnimating = true;
+          rafRef.current = requestAnimationFrame(smoothScroll);
+        }
+      }
     };
     
     const handleResize = () => {
@@ -102,7 +133,6 @@ function HomePage() {
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('resize', handleResize);
-    rafRef.current = requestAnimationFrame(smoothScroll);
     
     return () => {
       window.removeEventListener('wheel', handleWheel);
@@ -121,8 +151,8 @@ function HomePage() {
       setCursorPos({ x: e.clientX, y: e.clientY });
       
       setTooltipPos(prev => ({
-        x: prev.x + (e.clientX - prev.x) * 0.10,
-        y: prev.y + (e.clientY - prev.y) * 0.10
+        x: prev.x + (e.clientX - prev.x) * 0.3,
+        y: prev.y + (e.clientY - prev.y) * 0.3
       }));
       
       if (!isVisible) setIsVisible(true);
@@ -220,17 +250,30 @@ function HomePage() {
             data-url="ip-paris.fr"
           ><span className="portfolio-bio-underline">Institut Polytechnique de Paris</span></a>.
         </p>
-        <a 
-          href="https://www.linkedin.com/in/soheil-lotfi" 
-          className="portfolio-more-info" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          data-tooltip="true"
-          data-logo="https://cdn-icons-png.flaticon.com/512/174/174857.png"
-          data-url="linkedin.com"
-        >
-          ↗ More Info
-        </a>
+        <div className="portfolio-header-links">
+          <a 
+            href="https://www.linkedin.com/in/soheil-lotfi" 
+            className="portfolio-more-info" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            data-tooltip="true"
+            data-logo="https://cdn-icons-png.flaticon.com/512/174/174857.png"
+            data-url="linkedin.com"
+          >
+            ↗ LinkedIn
+          </a>
+          <span className="portfolio-link-separator">·</span>
+          <a 
+            href="mailto:soheil.lotfi@ip-paris.fr" 
+            className="portfolio-more-info"
+            data-tooltip="true"
+            data-logo="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico"
+            data-url="soheil.lotfi@ip-paris.fr"
+            target='_blank'
+          >
+            Contact
+          </a>
+        </div>
       </header>
 
       {/* Tabs */}
@@ -395,6 +438,12 @@ function ProjectDetailPageWrapper() {
   
   const project = projects.find(p => p.id === parseInt(projectId));
   
+  // Reset scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    scrollRef.current = { current: 0, target: 0 };
+  }, [projectId]);
+  
   // Detect touch device
   useEffect(() => {
     const checkTouchDevice = () => {
@@ -413,12 +462,12 @@ function ProjectDetailPageWrapper() {
     return () => window.removeEventListener('resize', checkTouchDevice);
   }, []);
 
-  // Smooth scroll with lag effect
+  // Optimized smooth scroll - stops when idle
   useEffect(() => {
-    // Skip on touch devices for better performance
     if (isTouchDevice) return;
     
     const ease = 0.08;
+    let isAnimating = false;
     
     const handleWheel = (e) => {
       e.preventDefault();
@@ -426,36 +475,67 @@ function ProjectDetailPageWrapper() {
       
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       scrollRef.current.target = Math.max(0, Math.min(scrollRef.current.target, maxScroll));
+      
+      // Start animation if not already running
+      if (!isAnimating) {
+        isAnimating = true;
+        rafRef.current = requestAnimationFrame(smoothScroll);
+      }
     };
     
     const smoothScroll = () => {
       const diff = scrollRef.current.target - scrollRef.current.current;
-      scrollRef.current.current += diff * ease;
-      window.scrollTo(0, scrollRef.current.current);
-      rafRef.current = requestAnimationFrame(smoothScroll);
+      
+      // Stop animating if difference is negligible (< 0.5px)
+      if (Math.abs(diff) > 0.5) {
+        scrollRef.current.current += diff * ease;
+        window.scrollTo(0, scrollRef.current.current);
+        rafRef.current = requestAnimationFrame(smoothScroll);
+      } else {
+        // Snap to target and stop
+        scrollRef.current.current = scrollRef.current.target;
+        window.scrollTo(0, scrollRef.current.current);
+        isAnimating = false;
+        rafRef.current = null;
+      }
     };
     
+    // Initialize scroll position
     scrollRef.current.current = window.scrollY;
     scrollRef.current.target = window.scrollY;
     
     const handleKeyDown = (e) => {
       const scrollAmount = 100;
+      let shouldScroll = false;
+      
       if (e.key === 'ArrowDown' || e.key === 'PageDown') {
         e.preventDefault();
         scrollRef.current.target += e.key === 'PageDown' ? window.innerHeight : scrollAmount;
+        shouldScroll = true;
       } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
         e.preventDefault();
         scrollRef.current.target -= e.key === 'PageUp' ? window.innerHeight : scrollAmount;
+        shouldScroll = true;
       } else if (e.key === 'Home') {
         e.preventDefault();
         scrollRef.current.target = 0;
+        shouldScroll = true;
       } else if (e.key === 'End') {
         e.preventDefault();
         scrollRef.current.target = document.documentElement.scrollHeight - window.innerHeight;
+        shouldScroll = true;
       }
       
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      scrollRef.current.target = Math.max(0, Math.min(scrollRef.current.target, maxScroll));
+      if (shouldScroll) {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        scrollRef.current.target = Math.max(0, Math.min(scrollRef.current.target, maxScroll));
+        
+        // Start animation if not already running
+        if (!isAnimating) {
+          isAnimating = true;
+          rafRef.current = requestAnimationFrame(smoothScroll);
+        }
+      }
     };
     
     const handleResize = () => {
@@ -466,7 +546,6 @@ function ProjectDetailPageWrapper() {
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('resize', handleResize);
-    rafRef.current = requestAnimationFrame(smoothScroll);
     
     return () => {
       window.removeEventListener('wheel', handleWheel);
@@ -485,8 +564,8 @@ function ProjectDetailPageWrapper() {
       setCursorPos({ x: e.clientX, y: e.clientY });
       
       setTooltipPos(prev => ({
-        x: prev.x + (e.clientX - prev.x) * 0.3,
-        y: prev.y + (e.clientY - prev.y) * 0.3
+        x: prev.x + (e.clientX - prev.x) * 0.10,
+        y: prev.y + (e.clientY - prev.y) * 0.10
       }));
       
       if (!isVisible) setIsVisible(true);
@@ -544,7 +623,6 @@ function ProjectDetailPageWrapper() {
 
   const goBackHome = () => {
     navigate('/');
-    window.scrollTo(0, 0);
   };
 
   return (

@@ -859,3 +859,15 @@
       font-size: 15px;
     }
   }
+
+  /* Header links styling */
+  .portfolio-header-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .portfolio-link-separator {
+    color: #666;
+    font-size: 14px;
+  }
