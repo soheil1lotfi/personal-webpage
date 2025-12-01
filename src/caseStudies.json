@@ -1,0 +1,346 @@
+{
+  "avangad": {
+    "id": "avangad",
+    "title": "Avangad",
+    "subtitle": "CRM Software for Technician Management",
+    "role": "UI Designer",
+    "year": "2024",
+    "duration": "3 months",
+    "tools": ["Figma", "FigJam"],
+    "heroImage": "/src/assets/projects/avangad/hero.png",
+    "sections": [
+      {
+        "type": "intro",
+        "content": "Avangad was a startup providing customer relationship management (CRM) software solutions. I worked on the first phase of their product to design a CRM interface for employers that hire technicians. This was a fast-paced environment, and I was hired as a UI Designer. Before my arrival, I was given a document on the market and user research, and I had to design UI solutions for them and solve some experience problems."
+      },
+      {
+        "type": "paragraph",
+        "content": "After understanding the business requirements and user needs, I created the user flows and information architecture to design the screens. The following shows some of the screens I designed."
+      },
+      {
+        "type": "heading",
+        "content": "Home Section"
+      },
+      {
+        "type": "paragraph",
+        "content": "In this section, you are able to see the dashboard of the home screen. It gives an overview of customers and the tasks to the manager."
+      },
+      {
+        "type": "image",
+        "src": "/src/assets/projects/avangad/dashboard.svg",
+        "alt": "Dashboard Overview",
+        "caption": "Main dashboard showing customer overview and task management"
+      },
+      {
+        "type": "paragraph",
+        "content": "The \"Live Activities\" section was developed through an iterative design process, addressing a key business requirement for enhanced job monitoring. This feature emerged from collaborative workshops with stakeholders and user interviews, which highlighted the need for real-time visibility into ongoing tasks."
+      },
+      {
+        "type": "paragraph",
+        "content": "We prototyped several versions of this section, testing them with actual managers to refine the user experience. The foldable design was chosen after usability tests showed it provided the best balance between information density and ease of use."
+      },
+      {
+        "type": "stats",
+        "items": [
+          { "value": "30%", "label": "Increase in managers' perceived ability to monitor technicians" },
+          { "value": "15%", "label": "Improvement in customer satisfaction scores" }
+        ]
+      },
+      {
+        "type": "heading",
+        "content": "Tasks Tab"
+      },
+      {
+        "type": "paragraph",
+        "content": "Where the employer can see the available tasks to be given to technicians."
+      },
+      {
+        "type": "image",
+        "src": "/src/assets/projects/avangad/tasks.svg",
+        "alt": "Tasks Tab",
+        "caption": "Tasks management interface"
+      },
+      {
+        "type": "paragraph",
+        "content": "Below you can see different states of the same screen:"
+      },
+      {
+        "type": "imageGrid",
+        "images": [
+          { "src": "/src/assets/projects/avangad/dropdown-1.svg", "alt": "Dropdown State 1" },
+          { "src": "/src/assets/projects/avangad/dropdown-2.svg", "alt": "Dropdown State 2" },
+          { "src": "/src/assets/projects/avangad/dropdown-3.svg", "alt": "Dropdown State 3" },
+          { "src": "/src/assets/projects/avangad/dropdown-4.svg", "alt": "Dropdown State 4" },
+          { "src": "/src/assets/projects/avangad/empty-state.svg", "alt": "Empty State" }
+        ]
+      },
+      {
+        "type": "heading",
+        "content": "Case Study"
+      },
+      {
+        "type": "subheading",
+        "content": "Something was wrong!?"
+      },
+      {
+        "type": "paragraph",
+        "content": "Feedback revealed that technicians and clients, often lacking technical expertise, struggled to update the system after task completion. Additionally, there was no clear way to monitor whether technicians were on-site and actively working, causing clients to question progress and leading to further support issues."
+      },
+      {
+        "type": "subheading",
+        "content": "Key Challenges"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Technicians were not marking tasks as complete, and clients lacked visibility on task progress.",
+          "The support team was overwhelmed by calls related to unconfirmed or in-progress tasks.",
+          "Managers struggled to monitor tasks in real-time and ensure that technicians were working according to schedule."
+        ]
+      },
+      {
+        "type": "heading",
+        "content": "Research & Discovery"
+      },
+      {
+        "type": "paragraph",
+        "content": "To dive deeper into the problem, I conducted user interviews and analyzed the behavior of both technicians and clients. Key findings included:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Technicians wanted a low-effort way to confirm task start and completion, especially when on-site.",
+          "Clients needed visibility on task progress without the burden of constantly checking the CRM.",
+          "Managers sought real-time tracking of tasks to ensure technicians were following through."
+        ]
+      },
+      {
+        "type": "heading",
+        "content": "Solution Development"
+      },
+      {
+        "type": "paragraph",
+        "content": "I proposed two key solutions to address these problems:"
+      },
+      {
+        "type": "subheading",
+        "content": "1. QR Code Task Closure"
+      },
+      {
+        "type": "paragraph",
+        "content": "The QR Code Task Closure solution addressed the issue of task confirmation:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Task Setup: Each client location was provided a unique QR code.",
+          "Completion Confirmation: Once the technician completed a task, they scanned the QR code using their mobile device, automatically marking the task as completed in the CRM.",
+          "Instant Notifications: The client and manager received real-time updates upon task completion."
+        ]
+      },
+      {
+        "type": "subheading",
+        "content": "2. Time-Based Progress Monitoring System"
+      },
+      {
+        "type": "paragraph",
+        "content": "To solve the issue of monitoring task progress, I designed a system where clients could verify if the technician was on-site and working:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Start Notification: When a technician began a task, a link is automatically sent to the client via email or SMS.",
+          "Customer Verification: The client could click the link to view the technician's status in real-time.",
+          "Follow-Up Action: If there was no confirmation from the client, the customer service team would follow up with a phone call."
+        ]
+      },
+      {
+        "type": "heading",
+        "content": "Impact and Results"
+      },
+      {
+        "type": "stats",
+        "items": [
+          { "value": "35%", "label": "Reduction in support calls related to task status" },
+          { "value": "25%", "label": "Improvement in on-time task starts and completions" },
+          { "value": "90%", "label": "Positive feedback from clients on real-time insight" }
+        ]
+      },
+      {
+        "type": "heading",
+        "content": "UI Demo"
+      },
+      {
+        "type": "paragraph",
+        "content": "Below, you can see the interactive interface I designed for the solution. Upon clicking on the link sent to the customer's phone, this webpage would appear on their phone."
+      },
+      {
+        "type": "video",
+        "src": "/src/assets/projects/avangad/demo.mp4",
+        "caption": "Interactive demo of the customer verification interface"
+      },
+      {
+        "type": "paragraph",
+        "content": "Since there was false clicking happening regularly, a regret button has been designed that upon clicking will trigger the exit of the page and send a new link to the customer's phone."
+      }
+    ]
+  },
+  "inshift": {
+    "id": "inshift",
+    "title": "InShift",
+    "subtitle": "Digikala's Pay-as-you-go Workforce Platform",
+    "role": "Product Designer",
+    "company": "Digikala",
+    "year": "2024",
+    "duration": "6 months",
+    "tools": ["Figma", "Divan Design System"],
+    "heroImage": "/src/assets/projects/inshift/hero.png",
+    "sections": [
+      {
+        "type": "intro",
+        "content": "Digikala, the Middle East's largest e-commerce platform, processes more than 350,000 items daily. In such a business, logistics is an essential part. The product named \"In-Shift\" is an internal platform designed to make Digikala's operations resemble a pay-as-you-go service, thereby avoiding additional costs and maximizing cost savings."
+      },
+      {
+        "type": "stats",
+        "items": [
+          { "value": "$2M+", "label": "Cost savings in Phase 1 (Fulfillment Center)" },
+          { "value": "$7M", "label": "Estimated savings in Phase 2" },
+          { "value": "350K+", "label": "Items processed daily" }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": "All of the operational tasks such as managing employees, assigning jobs, monitoring metrics, etc. were done manually in Excel sheets and pre-existing management dashboards and as Digikala and its sub-brands grew, it became clear that this process needed to be redesigned to meet the requirements of the growing business."
+      },
+      {
+        "type": "heading",
+        "content": "The Task"
+      },
+      {
+        "type": "paragraph",
+        "content": "Digikala, like Amazon, handles a vast amount of logistics daily. From sorting to various other operations, the company manages a complex system. Historically, Digikala has run this massive operation by employing interested individuals and managing the process using Excel sheets and local databases. This has led to significant costs in management and employee wages. As a product designer, I was tasked with redefining this manual process into a pay-as-you-go service."
+      },
+      {
+        "type": "heading",
+        "content": "1. Research and Discovery"
+      },
+      {
+        "type": "paragraph",
+        "content": "I began by conducting extensive research on DigiKala's current logistics operations. This involved:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Shadowing employees in the fulfillment center",
+          "Analyzing existing Excel sheets",
+          "Interviewing 20+ employees across different roles",
+          "Studying pay-as-a-go systems across different industries"
+        ]
+      },
+      {
+        "type": "heading",
+        "content": "2. Problem Definition"
+      },
+      {
+        "type": "paragraph",
+        "content": "Based on the research, I identified key issues:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Inefficient manual processes, leading to errors and delays",
+          "Lack of real-time visibility into operations",
+          "Difficulty in scaling operations with company growth",
+          "High costs associated with full-time employment model"
+        ]
+      },
+      {
+        "type": "heading",
+        "content": "3. Ideation and Conceptualization"
+      },
+      {
+        "type": "paragraph",
+        "content": "I organized a series of meetings with the product owner and lead designer to brainstorm solutions. Key ideas included:"
+      },
+      {
+        "type": "list",
+        "items": [
+          "Developing a centralized digital platform for task management",
+          "Implementing a flexible workforce model",
+          "Creating real-time performance tracking systems"
+        ]
+      },
+      {
+        "type": "heading",
+        "content": "4. User Flow"
+      },
+      {
+        "type": "paragraph",
+        "content": "Based on the information available in spreadsheets as well as the mentioned tasks to be accomplished by the two main stakeholders of the product (Job Seekers and employers), I tried to make a list of tasks that have to be done by each of the groups. With this foundation, user flows were created for the related tasks."
+      },
+      {
+        "type": "heading",
+        "content": "5. Information Architecture"
+      },
+      {
+        "type": "paragraph",
+        "content": "Based on the user flows, the information architecture and its access points was developed. Several iterations between user flow and IA occurred to achieve the final result."
+      },
+      {
+        "type": "heading",
+        "content": "High-Fidelity Design"
+      },
+      {
+        "type": "paragraph",
+        "content": "After having a concrete base for our information, the user interface for each task was designed. Different tasks were placed on a menu and the user could control and see the information related to that task in its dashboard. For the UI the \"Divan\" Design System, which is the design system designed and developed by the Digikala core design team, was used. The design has tried to be kept clutter-free while informative enough to avoid the redundancy of extra layers for more information."
+      },
+      {
+        "type": "subheading",
+        "content": "Labor Performance [Labor's Client]"
+      },
+      {
+        "type": "imageGrid",
+        "images": [
+          { "src": "/src/assets/projects/inshift/performance-desktop.svg", "alt": "Performance Desktop View" },
+          { "src": "/src/assets/projects/inshift/performance-mobile.svg", "alt": "Performance Mobile View" }
+        ]
+      },
+      {
+        "type": "subheading",
+        "content": "Labor Shift [Labor's Client]"
+      },
+      {
+        "type": "imageGrid",
+        "images": [
+          { "src": "/src/assets/projects/inshift/shifts-desktop.svg", "alt": "Shifts Desktop View" },
+          { "src": "/src/assets/projects/inshift/shifts-mobile.svg", "alt": "Shifts Mobile View" }
+        ]
+      },
+      {
+        "type": "subheading",
+        "content": "Labor Finance [Labor's Client]"
+      },
+      {
+        "type": "imageGrid",
+        "images": [
+          { "src": "/src/assets/projects/inshift/finance-desktop.svg", "alt": "Finance Desktop View" },
+          { "src": "/src/assets/projects/inshift/finance-mobile.svg", "alt": "Finance Mobile View" }
+        ]
+      },
+      {
+        "type": "subheading",
+        "content": "Dashboard [Employer's Client]"
+      },
+      {
+        "type": "image",
+        "src": "/src/assets/projects/inshift/dashboard.svg",
+        "alt": "Employer Dashboard",
+        "caption": "Main employer dashboard for workforce management"
+      },
+      {
+        "type": "callout",
+        "content": "Note: Because of the company's policy I will not be able to share the whole Figma file. Although, it would be possible to show you the copy of the file I have in my account in interviews or meetings."
+      }
+    ]
+  }
+}

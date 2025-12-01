@@ -49,7 +49,7 @@
     "subtitle": "Interactive data visualization project for the IGR204 course at Télécom Paris.",
     "year": "2023",
     "tags": ["Python", "Data Viz", "Jupyter", "Analytics"],
-    "category": "ux",
+    "category": "web",
     "image": "https://opengraph.githubassets.com/1/lisarosilio/igr204-Mini-Project",
     "repo": "https://github.com/lisarosilio/igr204-Mini-Project",
     "description": "An academic data visualization project completed as part of the IGR204 course at Télécom Paris. The project explores various techniques for visualizing complex datasets through interactive charts, graphs, and dashboards. Built using Python's data science stack including Pandas, Matplotlib, and Plotly, the project demonstrates best practices in data storytelling and visual analytics. Features include exploratory data analysis, interactive visualizations, and insightful statistical representations that reveal patterns and trends in the underlying data."
@@ -74,5 +74,27 @@
     "category": "ux",
     "image": "/src/assets/projects/llm-physviz.png",
     "description": "An innovative physical data visualization project that represents the scale and performance characteristics of various Large Language Models (LLMs) through tangible, tactile sculptures. Using a combination of clay modeling, 3D-printed components, and mixed materials, this project creates a physical comparison of models like GPT-4, GPT-3.5, and other major LLMs. The visualization maps abstract metrics such as parameter count, training data size, and performance benchmarks to physical dimensions and textures, making complex AI concepts more accessible and understandable through direct physical interaction."
+  },
+  {
+    "id": 8,
+    "title": "Avangad CRM",
+    "subtitle": "UI design for a CRM platform with QR-based task completion and real-time progress monitoring.",
+    "year": "2024",
+    "tags": ["UI Design", "CRM", "B2B", "Figma"],
+    "category": "ux",
+    "image": "/src/assets/projects/avangad.png",
+    "notion": "https://soheillotfi.notion.site/0451ed3c8ae2424cb6996deaedae25cf?v=8f637f87c0234ecaa5b96f0a2d0ff240&source=copy_link",
+    "description": "Avangad was a startup providing customer relationship management (CRM) software solutions for employers hiring technicians. As the UI Designer, I worked on the first phase of their product design, creating an intuitive interface that solved critical operational challenges. The CRM dashboard provides managers with real-time visibility into technician activities, customer tasks, and job progress. I designed comprehensive solutions including a QR code-based task closure system that automatically marks tasks complete when technicians scan codes at client locations, and a time-based progress monitoring system that sends real-time notifications to clients and managers. The design process involved extensive user research, iterative prototyping with actual managers, and collaborative workshops with stakeholders to understand the unique needs of the technician-management space. The implemented solutions resulted in a 35% reduction in support calls related to task status, 25% improvement in on-time task starts and completions, and 90% positive feedback from clients on real-time visibility. The interface balances information density with ease of use through foldable sections and streamlined workflows, ensuring that both technical and non-technical users can efficiently manage their operations."
+  },
+  {
+    "id": 9,
+    "title": "InShift (Digikala)",
+    "subtitle": "Pay-as-you-go workforce platform for the Middle East's largest e-commerce company.",
+    "year": "2024",
+    "tags": ["Product Design", "Enterprise", "Logistics", "Figma"],
+    "category": "ux",
+    "image": "/src/assets/projects/inshift.png",
+    "notion": "https://soheillotfi.notion.site/0451ed3c8ae2424cb6996deaedae25cf?v=8f637f87c0234ecaa5b96f0a2d0ff240&source=copy_link",
+    "description": "InShift is an internal workforce management platform designed for Digikala, the Middle East's largest e-commerce company that processes over 350,000 items daily. As the Product Designer, I transformed manual operational processes conducted through Excel sheets into a comprehensive digital platform that functions as a pay-as-you-go service, resulting in $2M+ cost savings in Phase 1 and estimated $7M savings in Phase 2. The project involved extensive research including shadowing fulfillment center employees, analyzing existing workflows, and conducting 20+ user interviews across different roles to understand the complex logistics operations. I developed the complete product strategy, user flows, and information architecture to address key pain points including inefficient manual processes, lack of real-time visibility, and inability to scale with company growth. The final platform features separate interfaces for job seekers (labor management, shift tracking, performance monitoring, and financial dashboards) and employers (workforce management, job assignment, and operational analytics). The design leverages Digikala's Divan Design System to maintain consistency while keeping the interface clutter-free yet informative. The platform successfully enables flexible workforce management, real-time performance tracking, and significant operational cost reduction while providing employees with transparent access to their shifts, earnings, and performance metrics."
   }
 ]

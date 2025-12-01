@@ -151,8 +151,8 @@ function HomePage() {
       setCursorPos({ x: e.clientX, y: e.clientY });
       
       setTooltipPos(prev => ({
-        x: prev.x + (e.clientX - prev.x) * 0.3,
-        y: prev.y + (e.clientY - prev.y) * 0.3
+        x: prev.x + (e.clientX - prev.x) * 0.10,
+        y: prev.y + (e.clientY - prev.y) * 0.10
       }));
       
       if (!isVisible) setIsVisible(true);
@@ -274,6 +274,7 @@ function HomePage() {
             Contact
           </a>
         </div>
+        <div className='portfolio-bio'>* My research has not been discussed here.</div>
       </header>
 
       {/* Tabs */}
@@ -728,19 +729,34 @@ function ProjectDetailPage({ project, onBack }) {
           <p className="project-detail-description">{project.description}</p>
         </div>
 
-        {project.repo && (
+        {(project.repo || project.notion) && (
           <div className="project-detail-actions">
-            <a 
-              href={project.repo} 
-              className="project-detail-github-link" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              data-tooltip="true"
-              data-logo="https://github.githubassets.com/favicons/favicon.svg"
-              data-url="github.com"
-            >
-              View on GitHub ↗
-            </a>
+            {project.repo && (
+              <a 
+                href={project.repo} 
+                className="project-detail-github-link" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                data-tooltip="true"
+                data-logo="https://github.githubassets.com/favicons/favicon.svg"
+                data-url="github.com"
+              >
+                View on GitHub ↗
+              </a>
+            )}
+            {project.notion && (
+              <a 
+                href={project.notion} 
+                className="project-detail-notion-link" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                data-tooltip="true"
+                data-logo="https://www.notion.so/images/favicon.ico"
+                data-url="notion.so"
+              >
+                View Case Study ↗
+              </a>
+            )}
           </div>
         )}
       </div>
