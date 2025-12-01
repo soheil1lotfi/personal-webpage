@@ -3,6 +3,19 @@ import { BrowserRouter as Router, Routes, Route, useNavigate, useParams } from '
 import './index.css';
 import projects from './projects.json';
 
+// Helper function to handle image URLs with base path
+const getImageUrl = (path) => {
+  // Handle external URLs (like GitHub opengraph images)
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    return path;
+  }
+  // Prepend base URL for local images
+  const base = import.meta.env.BASE_URL || '/';
+  // Remove leading slash from path if base already ends with one
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  return `${base}${cleanPath}`;
+};
+
 export default function Portfolio() {
   return (
     <Router basename={import.meta.env.BASE_URL || ''}>
@@ -386,7 +399,7 @@ function ProjectCard({ project, onClick }) {
           </div>
         ) : (
           <img 
-            src={project.image} 
+            src={getImageUrl(project.image)} 
             alt={project.title}
             onError={() => setImageError(true)}
             style={{
@@ -715,7 +728,7 @@ function ProjectDetailPage({ project, onBack }) {
           </div>
         ) : (
           <img 
-            src={project.image} 
+            src={getImageUrl(project.image)} 
             alt={project.title}
             onError={() => setImageError(true)}
           />
