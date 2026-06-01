@@ -114,7 +114,7 @@ function HomePage() {
             , building a collaborative AI platform for French Sign Language with the Deaf community.
             Outside of research, I'm a former competitive speedcuber and a lifelong tennis player.
             <br /><br />
-            <span className="phd-badge">Actively looking for a PhD position</span>
+            <span className="phd-badge">Actively looking for a job position</span>
           </p>
           <nav className="site-links">
             <a href="https://www.linkedin.com/in/soheil-lotfi" target="_blank" rel="noopener noreferrer">
