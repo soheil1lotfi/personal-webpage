@@ -78,11 +78,12 @@ const getImageUrl = (path) => {
   return `${base}${cleanPath}`;
 };
 
-const SCRAMBLE_CHARS = '><1#\\0?$';
+const SCRAMBLE_CHARS = '_1/0X#';
 const activeScrambleStop = { current: null };
 
 function useScramble(text) {
   const [display, setDisplay] = useState(text);
+  const [isScrambling, setIsScrambling] = useState(false);
   const intervalRef = useRef(null);
   const iterRef = useRef(0);
 
@@ -90,37 +91,50 @@ function useScramble(text) {
     if (activeScrambleStop.current) activeScrambleStop.current();
 
     iterRef.current = 0;
+    setIsScrambling(true);
     clearInterval(intervalRef.current);
 
     activeScrambleStop.current = () => {
       clearInterval(intervalRef.current);
       setDisplay(text);
+      setIsScrambling(false);
     };
 
+    const step = text.length / 40;
     intervalRef.current = setInterval(() => {
       const iter = iterRef.current;
       setDisplay(
         text.split('').map((char, i) => {
           if (char === ' ') return ' ';
           if (i < Math.floor(iter)) return char;
-          return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+          const prob = Math.max(0, 1 - (i - iter) / text.length);
+          if (Math.random() < prob) return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+          return char;
         }).join('')
       );
-      iterRef.current += 0.8;
+      iterRef.current += step;
       if (iterRef.current > text.length) {
         clearInterval(intervalRef.current);
         setDisplay(text);
+        setIsScrambling(false);
         activeScrambleStop.current = null;
       }
     }, 20);
   }, [text]);
 
-  return { display, start };
+  return { display, start, isScrambling };
 }
 
 function ScrambleText({ text }) {
-  const { display, start } = useScramble(text);
-  return <span onMouseEnter={start}>{display}</span>;
+  const { display, start, isScrambling } = useScramble(text);
+  return (
+    <span onMouseEnter={start} style={{ position: 'relative', display: 'inline-block' }}>
+      <span style={{ visibility: 'hidden' }}>{text}</span>
+      <span style={{ position: 'absolute', left: 0, top: 0 }}>
+        {isScrambling ? display : text}
+      </span>
+    </span>
+  );
 }
 
 export default function Portfolio() {
@@ -190,7 +204,6 @@ function HomePage() {
 
 function ProjectRow({ project, onClick }) {
   const [imageError, setImageError] = useState(false);
-  const { display, start } = useScramble(project.title);
 
   return (
     <li className="project-row" onClick={onClick}>
@@ -207,7 +220,7 @@ function ProjectRow({ project, onClick }) {
       </div>
       <div className="project-row-info">
         <div className="project-row-top">
-          <span className="project-row-title" onMouseEnter={start}>{display}</span>
+          <span className="project-row-title"><ScrambleText text={project.title} /></span>
           <span className="project-row-year">{project.year}</span>
         </div>
         <p className="project-row-subtitle">{project.subtitle}</p>
