@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { BrowserRouter as Router, Routes, Route, useNavigate, useParams } from 'react-router-dom'
 import './index.css';
 import projects from './projects.json';
@@ -78,6 +78,51 @@ const getImageUrl = (path) => {
   return `${base}${cleanPath}`;
 };
 
+const SCRAMBLE_CHARS = '><1#\\0?$';
+const activeScrambleStop = { current: null };
+
+function useScramble(text) {
+  const [display, setDisplay] = useState(text);
+  const intervalRef = useRef(null);
+  const iterRef = useRef(0);
+
+  const start = useCallback(() => {
+    if (activeScrambleStop.current) activeScrambleStop.current();
+
+    iterRef.current = 0;
+    clearInterval(intervalRef.current);
+
+    activeScrambleStop.current = () => {
+      clearInterval(intervalRef.current);
+      setDisplay(text);
+    };
+
+    intervalRef.current = setInterval(() => {
+      const iter = iterRef.current;
+      setDisplay(
+        text.split('').map((char, i) => {
+          if (char === ' ') return ' ';
+          if (i < Math.floor(iter)) return char;
+          return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+        }).join('')
+      );
+      iterRef.current += 0.8;
+      if (iterRef.current > text.length) {
+        clearInterval(intervalRef.current);
+        setDisplay(text);
+        activeScrambleStop.current = null;
+      }
+    }, 20);
+  }, [text]);
+
+  return { display, start };
+}
+
+function ScrambleText({ text }) {
+  const { display, start } = useScramble(text);
+  return <span onMouseEnter={start}>{display}</span>;
+}
+
 export default function Portfolio() {
   return (
     <Router basename={import.meta.env.BASE_URL || ''}>
@@ -112,16 +157,20 @@ function HomePage() {
               LISN–CNRS
             </a>
             , building a collaborative AI platform for French Sign Language with the Deaf community.
-            Outside of research, I'm a former competitive speedcuber and a lifelong tennis player.
-            <br /><br />
+            <br />Outside of research, I'm a former competitive speedcuber and a lifelong tennis player.
+            </p><br />
+
+            <p><i>*Interests: Interaction Design, Human-AI Interaction, Visualization, UX</i></p>
+            <br />
             <span className="phd-badge">Actively looking for a job position</span>
-          </p>
+            <br /><br />
+
           <nav className="site-links">
             <a href="https://www.linkedin.com/in/soheil-lotfi" target="_blank" rel="noopener noreferrer">
-              LinkedIn ↗
+              <ScrambleText text="LinkedIn ↗" />
             </a>
             <span className="site-links-sep">·</span>
-            <a href="mailto:soheil.lotfi@ip-paris.fr">Contact</a>
+            <a href="mailto:soheil.lotfi@ip-paris.fr"><ScrambleText text="Contact" /></a>
           </nav>
         </div>
       </header>
@@ -141,6 +190,7 @@ function HomePage() {
 
 function ProjectRow({ project, onClick }) {
   const [imageError, setImageError] = useState(false);
+  const { display, start } = useScramble(project.title);
 
   return (
     <li className="project-row" onClick={onClick}>
@@ -157,7 +207,7 @@ function ProjectRow({ project, onClick }) {
       </div>
       <div className="project-row-info">
         <div className="project-row-top">
-          <span className="project-row-title">{project.title}</span>
+          <span className="project-row-title" onMouseEnter={start}>{display}</span>
           <span className="project-row-year">{project.year}</span>
         </div>
         <p className="project-row-subtitle">{project.subtitle}</p>
@@ -181,7 +231,7 @@ function ProjectDetailPage() {
   if (!project) {
     return (
       <div className="page">
-        <button className="back-link" onClick={() => navigate('/')}>← Back</button>
+        <button className="back-link" onClick={() => navigate('/')}><ScrambleText text="← Back" /></button>
         <p>Project not found.</p>
       </div>
     );
@@ -189,7 +239,7 @@ function ProjectDetailPage() {
 
   return (
     <div className="page">
-      <button className="back-link" onClick={() => navigate('/')}>← Back</button>
+      <button className="back-link" onClick={() => navigate('/')}><ScrambleText text="← Back" /></button>
 
       <article className="project-article">
         <header className="project-article-header">
@@ -232,17 +282,17 @@ function ProjectDetailPage() {
           <div className="project-article-links">
             {project.repo && (
               <a href={project.repo} target="_blank" rel="noopener noreferrer">
-                View on GitHub ↗
+                <ScrambleText text="View on GitHub ↗" />
               </a>
             )}
             {project.weblog && (
               <a href={project.weblog} target="_blank" rel="noopener noreferrer">
-                Our Course Weblog ↗
+                <ScrambleText text="Our Course Weblog ↗" />
               </a>
             )}
             {project.notion && (
               <a href={project.notion} target="_blank" rel="noopener noreferrer">
-                View Case Study ↗
+                <ScrambleText text="View Case Study ↗" />
               </a>
             )}
           </div>

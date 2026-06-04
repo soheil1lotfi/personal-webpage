@@ -101,7 +101,7 @@ button {
   text-transform: uppercase;
   color: #111;
   border: 1.5px solid #111;
-  padding: 3px 8px;
+  padding: 2px 6px;
 }
 
 .site-links {
@@ -118,8 +118,6 @@ button {
 }
 
 .site-links a:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
   opacity: 1;
 }
 
@@ -170,23 +168,6 @@ button {
   position: relative;
 }
 
-.project-row::before {
-  content: '*';
-  position: absolute;
-  left: -14px;
-  top: 24px;
-  opacity: 0;
-  transition: opacity 0.15s;
-}
-
-.project-row:hover::before {
-  opacity: 1;
-}
-
-.project-row:hover .project-row-title {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
 
 .project-row-thumb {
   flex-shrink: 0;
@@ -377,8 +358,6 @@ button {
 }
 
 .project-article-links a:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
   opacity: 1;
 }
 
