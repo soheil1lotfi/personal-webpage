@@ -105,7 +105,7 @@ function useScramble(text) {
       const iter = iterRef.current;
       setDisplay(
         text.split('').map((char, i) => {
-          if (char === ' ') return ' ';
+          if (char === ' ' || char.charCodeAt(0) > 127) return char;
           if (i < Math.floor(iter)) return char;
           const prob = Math.max(0, 1 - (i - iter) / text.length);
           if (Math.random() < prob) return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
@@ -133,6 +133,56 @@ function ScrambleText({ text }) {
       <span style={{ position: 'absolute', left: 0, top: 0 }}>
         {isScrambling ? display : text}
       </span>
+    </span>
+  );
+}
+
+const RUBIK_COLORS = ['#FF5555', '#FF9B00', '#4A90E2', '#50C878', '#FFE84D', '#FFFFFF'];
+
+function getContrastColor(hex) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return (r * 299 + g * 587 + b * 114) / 1000 > 128 ? '#000' : '#fff';
+}
+
+function RubikText({ text }) {
+  const [colors, setColors] = useState(() => Array(text.length).fill(null));
+  const intervalRef = useRef(null);
+
+  const startCycling = useCallback(() => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setColors(text.split('').map(() => RUBIK_COLORS[Math.floor(Math.random() * RUBIK_COLORS.length)]));
+    }, 140);
+  }, [text]);
+
+  const stopCycling = useCallback(() => {
+    clearInterval(intervalRef.current);
+    text.split('').forEach((_, i) => {
+      setTimeout(() => {
+        setColors(prev => {
+          const next = [...prev];
+          next[i] = null;
+          return next;
+        });
+      }, Math.random() * 400);
+    });
+  }, [text]);
+
+  return (
+    <span onMouseEnter={startCycling} onMouseLeave={stopCycling}>
+      {text.split('').map((char, i) => (
+        <span
+          key={i}
+          style={{
+            backgroundColor: colors[i] ?? 'transparent',
+            color: colors[i] ? getContrastColor(colors[i]) : 'inherit',
+          }}
+        >
+          {char}
+        </span>
+      ))}
     </span>
   );
 }
@@ -171,7 +221,7 @@ function HomePage() {
               LISN–CNRS
             </a>
             , building a collaborative AI platform for French Sign Language with the Deaf community.
-            <br />Outside of research, I'm a former competitive speedcuber and a lifelong tennis player.
+            <br />Outside of research, I'm a former competitive <RubikText text="speedcuber" /> and a lifelong tennis player.
             </p><br />
 
             <p><i>*Interests: Interaction Design, Human-AI Interaction, Visualization, UX</i></p>
